@@ -1,51 +1,44 @@
+
+package webprj;
+
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns = {"/SignupServlet"})
-public class signupserv extends HttpServlet {
+
+public class Signupserv extends HttpServlet {
 
    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-          String name=request.getParameter("t1");
-          String mobile=request.getParameter("t2");
-          String pass=request.getParameter("p1");
-          String c_pass=request.getParameter("p2");
-          if(pass.equals(c_pass))
-          {
-              Class.forName("org.apache.derby.jdbc.ClientDriver");
-            Connection con=DriverManager.getConnection("jdbc:derby://localhost:1527/surya", "root", "root");
-            Statement st= con.createStatement();
-           st.executeUpdate("insert into student values('"+name+"','"+mobile+"','"+pass+"','"+c_pass+"')");
-           response.sendRedirect("index.html");
-          }
-          else
-          { response.sendRedirect("signup.html");
-          }
-        }catch (ClassNotFoundException ex) {
-            Logger.getLogger(signupserv.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        //response.sendRedirect("signup.html");
-
-        catch (SQLException ex) {
-            Logger.getLogger(signupserv.class.getName()).log(Level.SEVERE, null, ex);
+            out.print("<html>");
+          out.print("<body>");
+          out.print("<center>");
+          out.print("<form action='Signupserv1'>");
+          out.print("<h1>signup here...............</h1><br>");
+          out.print("name:");
+          out.print("<input type='text' name='t1' placeholder='enter name here'><br>");
+          out.print("mobile_no:");
+          out.print("<input type='number' name='t2' placeholder='enter phone number here'><br>");
+          out.print("<br>password:");
+          out.print("<input type='password' name='p1'/>");
+          out.print("<br>confirm_password:");
+          out.print("<input type='password' name='p2' placeholder='enter confirm password here'><br>");
+          out.print("<br><input type='submit' value='submit'>");
+          out.print("</form></center></body></html>");
+   
+       //    response.sendRedirect("Success.html");
+          // response.sendRedirect("Signupserv1");   
+        //  out.print("entered succesfully");
+          
         }
     }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

@@ -1,51 +1,49 @@
+
+package webprj;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-@WebServlet(urlPatterns = {"/SignupServlet"})
-public class signupserv extends HttpServlet {
+
+public class Signupserv1 extends HttpServlet {
 
    
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-          String name=request.getParameter("t1");
+            String name=request.getParameter("t1");
           String mobile=request.getParameter("t2");
           String pass=request.getParameter("p1");
           String c_pass=request.getParameter("p2");
-          if(pass.equals(c_pass))
-          {
-              Class.forName("org.apache.derby.jdbc.ClientDriver");
-            Connection con=DriverManager.getConnection("jdbc:derby://localhost:1527/surya", "root", "root");
+           HttpSession ab=request.getSession(true);
+           if(pass.equals(c_pass))
+           {
+               Class.forName("org.apache.derby.jdbc.ClientDriver");
+            Connection con=DriverManager.getConnection("jdbc:derby://localhost:1527/suryaprakash","root","root");
             Statement st= con.createStatement();
-           st.executeUpdate("insert into student values('"+name+"','"+mobile+"','"+pass+"','"+c_pass+"')");
-           response.sendRedirect("index.html");
-          }
-          else
-          { response.sendRedirect("signup.html");
-          }
-        }catch (ClassNotFoundException ex) {
-            Logger.getLogger(signupserv.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        //response.sendRedirect("signup.html");
-
-        catch (SQLException ex) {
-            Logger.getLogger(signupserv.class.getName()).log(Level.SEVERE, null, ex);
+           st.executeUpdate("insert into project(username ,mobile_no,password,confirm_password) values('"+name+"',"+mobile+",'"+pass+"','"+c_pass+"')");
+          out.print("data entered succesfully");
+           response.sendRedirect("Loginserv");
+           }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Signupserv1.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(Signupserv1.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
